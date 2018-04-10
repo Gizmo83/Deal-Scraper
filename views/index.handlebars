@@ -1,0 +1,14 @@
+<h1>Job Scraper</h1>
+
+<ul>
+  {{#each posts}}
+  	<li>
+       <p>Company: {{this.company}}</p>
+       <p>Title: {{this.title}}</p>
+       <p>Description: {{this.description}}</p>
+       <button class="save" data-id="{{this._id}}">Save Job</button>
+  	</li>
+  {{/each}}
+</ul>
+
+<script src="assets/js/index.js"></script>

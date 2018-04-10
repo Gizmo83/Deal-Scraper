@@ -1,35 +1,44 @@
+var express = require("express");
+var bodyParser = require("body-parser");
 var cheerio = require("cheerio");
 var request = require("request");
+var mongoose = require("mongoose");
+var logger = require("morgan");
 
-// Making a request for ziprecruiter's junior developer search results. The page's HTML is passed as the callback's third argument
-request("https://www.ziprecruiter.com/candidate/search?search=junior+developer&location=West+Covina%2C+CA", function(error, response, html) {
+// Require all models
+var db = require("./models");
 
-  // Load the HTML into cheerio and save it to a variable
-  // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
-  var $ = cheerio.load(html);
+var PORT = 3000;
 
-  // An empty array to save the data that we'll scrape
-  var results = [];
+// Initialize Express
+var app = express();
 
-  // With cheerio, find each div with the "job_content" class
-  // (i: iterator. element: the current element)
-  $("div.job_content").each(function(i, element) {
-    //console.log(i);
-    //console.log(element);
-    // Save the text of the element in a "title" variable
-    var title = $(element).children().children("h2.job_title").children("span.just_job_title").text();
-    var company = $(element).children("p.job_org").children("a.name").text();
-    var description = $(element).children("p.job_snippet").children().text();
-    var link = $(element).children().attr("href");
+// Configure middleare
 
-    // Save these results in an object that we'll push into the results array we defined earlier
-    results.push({
-      company: company,
-      title: title,
-      description: description,
-      link: link
-    });
-  });
-  // Log the results once you've looped through each of the elements found with cheerio
-  console.log(results);
+// Use morgan logger for logging requests
+app.use(logger("dev"));
+// Use body-parser for handling form submissions
+app.use(bodyParser.urlencoded({ extended: true }));
+// Use express.static to serve the public folder as a static directory
+app.use(express.static("public"));
+
+// Connect to the Mongo DB
+mongoose.connect("mongodb://localhost/jobscraper_db");
+
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
+// Static directory
+app.use(express.static("public"));
+
+//Routes
+require("./routes/api-routes.js")(app);
+
+
+// Start the server
+app.listen(PORT, function() {
+  console.log("App running on port " + PORT + "!");
 });
