@@ -47,7 +47,7 @@ module.exports = function (app) {
 })
 
     // Route for getting all Posts from db
-    app.get("/posts", function(req, res) {
+    app.get("/", function(req, res) {
         db.Post.find({})
         .then(function(dbPost) {
             //console.log(dbPost);
@@ -73,6 +73,7 @@ module.exports = function (app) {
 
     // Route for saving/updating a Post's associated note
     app.post("/posts/:id", function(req, res) {
+        console.log(req.body);
         db.Note.create(req.body)
             .then(function(dbNote) {
                 return db.Post.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
@@ -85,6 +86,20 @@ module.exports = function (app) {
             });
     });
 
+    // Route for getting all favorites from db
+    app.get("/favorite", function(req, res) {
+        db.Post.find({
+            favorite: true
+        })
+        .then(function(dbFavorites) {
+            res.render("favorites", {posts: dbFavorites})
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
+    });
+
+    // Route for adding a post to favorites
     app.post("/favorite/:id", function(req, res) {
         db.Post.findOneAndUpdate({ _id: req.params.id }, { favorite: true })
         .then(function(dbpost) {
@@ -92,8 +107,17 @@ module.exports = function (app) {
         })
         .catch(function(err) {
             res.json(err);
-        })
-    })
+        });
+    });
     
+    app.post("/favorite/delete/:id", function(req, res) {
+        db.Post.findOneAndUpdate({ _id: req.params.id }, { favorite: false })
+        .then(function(dbpost) {
+            res.json(dbpost);
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
+    });
 
 }

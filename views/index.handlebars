@@ -1,13 +1,15 @@
-<h1>Job Scraper</h1>
+<h2>Job Scraper</h2>
+<a id="scrape-btn" class="waves-effect waves-light btn">Scrape Now</a>
 
-<ul>
+<ul class="collection">
   {{#each posts}}
-  	<li>
-       <p>Company: {{this.company}}</p>
-       <p>Title: {{this.title}}</p>
-       <p>Description: {{this.description}}</p>
-       <button class="save" data-id="{{this._id}}">Save Job</button>
-  	</li>
+    <li class="collection-item avatar">
+      <span class="title">{{this.title}}</span>
+      <p><i class="material-icons">business</i> {{this.company}} <br>
+          {{this.description}}
+      </p>
+      <a class="save secondary-content" data-id="{{this._id}}"><i class="material-icons">grade</i></a>
+    </li>
   {{/each}}
 </ul>
 
