@@ -4,6 +4,7 @@ $(".save").on("click", function() {
         type: "POST",
         url: "/favorite/" + thisId
     })
+    M.toast({html: 'Added to Favorites'})
 })
 
 $("#scrape-btn").on("click", function() {
@@ -13,7 +14,6 @@ $("#scrape-btn").on("click", function() {
 })
 
 // Favorites Page
-
 $(document).ready(function() {
     $('.modal').modal();
 });
@@ -38,6 +38,7 @@ $(".note").on("click", function() {
 
         if (data.note) {
             // Place the body of the note in the body textarea
+
             $("label").empty();
             $("textarea").val(data.note.body);
         }

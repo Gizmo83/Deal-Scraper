@@ -1,40 +1,49 @@
-<h2>Job Scraper</h2>
-<h3>Favorites</h3>
 
-<ul class="collection">
-  {{#each posts}}
-    <li class="collection-item avatar">
-      <span class="title">{{this.title}}</span>
-      <p><i class="material-icons">business</i> {{this.company}} <br>
-          {{this.description}}
-      </p>
-      <div class="secondary-content">
-        <a class="note modal-trigger" data-id="{{this._id}}" href="#modal1"><i class="small material-icons">note_add</i></a>
-        <a class="delete" data-id="{{this._id}}" href=""><i class="small material-icons">delete_forever</i></a>
-      </div>
-    </li>
-  {{/each}}
-</ul>
+<div class="container">
+    <h2>Job Scraper</h2>
+    <h3>Favorites</h3>
 
-<!-- Modal Structure -->
-<div id="modal1" class="modal">
-    <div class="modal-content">
-        <h4 id="title"></h4>
-        <p id="company"></p>
-    </div>
-    <div class="row">
-        <form class="col s12">
-            <div class="row">
-                <div class="input-field col s6">
-                    <i class="material-icons prefix">mode_edit</i>
-                    <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
-                    <label for="icon_prefix2">Add note here</label>
+    <ul class="collection">
+    {{#each posts}}
+        <li class="collection-item avatar">
+        <a href="{{this.link}}" target="blank">
+          <span class="title">{{this.title}}</span>
+          <p><i class="material-icons">business</i> {{this.company}} <br>
+              {{this.description}}
+          </p>
+        </a>
+        <div class="secondary-content">
+            {{#if this.note}}
+                <a class="note modal-trigger" data-id="{{this._id}}" href="#modal1"><i class="small material-icons">note</i></a>
+                {{else}}
+                <a class="note modal-trigger" data-id="{{this._id}}" href="#modal1"><i class="small material-icons">note_add</i></a>
+            {{/if}}
+            <a class="delete" data-id="{{this._id}}" href=""><i class="small material-icons">delete_forever</i></a>
+        </div>
+        </li>
+    {{/each}}
+    </ul>
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4 id="title"></h4>
+            <p id="company"></p>
+        </div>
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">mode_edit</i>
+                        <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+                        <label for="icon_prefix2">Add note here</label>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" id="save-note" class="modal-action modal-close waves-effect waves-green btn-flat">Save</a>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="save-note" class="modal-action modal-close waves-effect waves-green btn-flat">Save</a>
+        </div>
     </div>
 </div>
 

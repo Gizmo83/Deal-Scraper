@@ -1,6 +1,5 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-var cheerio = require("cheerio");
 var request = require("request");
 var mongoose = require("mongoose");
 var logger = require("morgan");

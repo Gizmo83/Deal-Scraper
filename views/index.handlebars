@@ -1,16 +1,25 @@
-<h2>Job Scraper</h2>
-<a id="scrape-btn" class="waves-effect waves-light btn">Scrape Now</a>
+<div class="container">
+  <h2>Job Scraper</h2>
+  <a id="scrape-btn" class="waves-effect waves-light btn">Scrape Now</a>
+  <a id="favorites-btn" class="waves-effect waves-light btn" href="/favorite">Favorites</a>
 
-<ul class="collection">
-  {{#each posts}}
-    <li class="collection-item avatar">
-      <span class="title">{{this.title}}</span>
-      <p><i class="material-icons">business</i> {{this.company}} <br>
-          {{this.description}}
-      </p>
-      <a class="save secondary-content" data-id="{{this._id}}"><i class="material-icons">grade</i></a>
-    </li>
-  {{/each}}
-</ul>
+  <ul class="collection">
+    {{#each posts}}
+      <li class="collection-item avatar">
+        <a href="{{this.link}}" target="blank">
+          <span class="title">{{this.title}}</span>
+          <p><i class="material-icons">business</i> {{this.company}} <br>
+              {{this.description}}
+          </p>
+        </a>
+        {{#if this.favorite}}
+          <a class="save secondary-content" data-id="{{this._id}}" href=""><i class="material-icons">check_box</i></a>
+          {{else}}
+          <a class="save secondary-content" data-id="{{this._id}}" href=""><i class="material-icons">grade</i></a>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+</div>
 
 <script src="assets/js/index.js"></script>
