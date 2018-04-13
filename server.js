@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-var MONGODB_URI = process.env.MONGODB_COPPER_URI || "mongodb://localhost/jobscraper_db";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/jobscraper_db";
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI, {
   useMongoClient: true
