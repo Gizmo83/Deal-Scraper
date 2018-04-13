@@ -43,6 +43,6 @@ require("./routes/api-routes.js")(app);
 
 
 // Start the server
-app.listen(PORT, function() {
+app.listen(process.env.PORT, function() {
   console.log("App running on port " + PORT + "!");
 });
