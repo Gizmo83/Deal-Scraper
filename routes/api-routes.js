@@ -1,4 +1,4 @@
-var db = require("../models");
+var datab = require("../models");
 var request = require("request");
 var cheerio = require("cheerio");
 var mongoose = require("mongoose");
@@ -30,7 +30,7 @@ module.exports = function (app) {
             result.favorite = false;
             
             // Create a new Post using the `result` object built from scraping
-            db.Post.create(result)
+            datab.Post.create(result)
             .then(function(dbPost) {
                 // View the added result in the console
                 console.log(dbPost);
@@ -43,14 +43,13 @@ module.exports = function (app) {
         
         // Send a "Scrape Completge" message to the browser
         res.send("Scrape Complete")
-        console.log(postAdded);
         });
     })
 
 
     // Route for getting all Posts from db
     app.get("/", function(req, res) {
-        db.Post.find({})
+        datab.Post.find({})
         .then(function(dbPost) {
             //console.log(dbPost);
             //res.json(dbPost);
@@ -63,7 +62,7 @@ module.exports = function (app) {
 
     // Route for grabbing a specific Post by id, populate it with it's note
     app.get("/posts/:id", function(req,res) {
-        db.Post.findOne({ _id: req.params.id })
+        datab.Post.findOne({ _id: req.params.id })
         .populate("note")
         .then(function(dbPost) {
             res.json(dbPost);
@@ -76,7 +75,7 @@ module.exports = function (app) {
     // Route for saving/updating a Post's associated note
     app.post("/posts/:id", function(req, res) {
         console.log(req.body);
-        db.Note.create(req.body)
+        datab.Note.create(req.body)
             .then(function(dbNote) {
                 return db.Post.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
             })
@@ -90,7 +89,7 @@ module.exports = function (app) {
 
     // Route for getting all favorites from db
     app.get("/favorite", function(req, res) {
-        db.Post.find({
+        datab.Post.find({
             favorite: true
         })
         .then(function(dbFavorites) {
@@ -103,7 +102,7 @@ module.exports = function (app) {
 
     // Route for adding a post to favorites
     app.post("/favorite/:id", function(req, res) {
-        db.Post.findOneAndUpdate({ _id: req.params.id }, { favorite: true })
+        datab.Post.findOneAndUpdate({ _id: req.params.id }, { favorite: true })
         .then(function(dbpost) {
             res.json(dbpost);
         })
@@ -113,7 +112,7 @@ module.exports = function (app) {
     });
     
     app.post("/favorite/delete/:id", function(req, res) {
-        db.Post.findOneAndUpdate({ _id: req.params.id }, { favorite: false })
+        datab.Post.findOneAndUpdate({ _id: req.params.id }, { favorite: false })
         .then(function(dbpost) {
             res.json(dbpost);
         })

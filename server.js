@@ -29,6 +29,7 @@ mongoose.connect(MONGODB_URI, {
   useMongoClient: true
 });
 
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
