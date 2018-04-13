@@ -57,6 +57,7 @@ $("#save-note").on("click", function() {
     })
     .then(function(data) {
         //console.log(data);
+        location.reload();
     })
 })
 

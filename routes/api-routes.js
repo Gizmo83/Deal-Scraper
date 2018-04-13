@@ -77,7 +77,7 @@ module.exports = function (app) {
         console.log(req.body);
         datab.Note.create(req.body)
             .then(function(dbNote) {
-                return db.Post.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+                return datab.Post.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
             })
             .then(function(dbPost) {
                 res.json(dbPost);
