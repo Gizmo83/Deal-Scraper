@@ -1,5 +1,4 @@
-//var db = require("../models");
-var db = mongoose.connection;
+var db = require("../models");
 var request = require("request");
 var cheerio = require("cheerio");
 var mongoose = require("mongoose");
