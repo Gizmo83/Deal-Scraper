@@ -43,8 +43,10 @@ module.exports = function (app) {
         
         // Send a "Scrape Completge" message to the browser
         res.send("Scrape Complete")
-    });
-})
+        console.log(postAdded);
+        });
+    })
+
 
     // Route for getting all Posts from db
     app.get("/", function(req, res) {
